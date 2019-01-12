@@ -8,6 +8,12 @@ function handleSubmit(event) {
 	const data = new FormData($form);
 	const title = data.get('title');
 	console.log(title);
+	store.dispatch({
+		type: 'ADD_SONG',
+		payload: { 
+			title,
+		}
+	})
 }
 
 const initialState = [
@@ -22,8 +28,17 @@ const initialState = [
 	}
 ]
 
+const reducer = function(state, action) {
+	switch (action.type) {
+		case 'ADD_SONG':
+			return [...state, action.payload]
+		default:
+			return state
+	}
+}
+
 const store = createStore(
-	(state) => state,
+	reducer,
 	initialState,
 	 window.__REDUX_DEVTOOLS_EXTENSION__ && window.__REDUX_DEVTOOLS_EXTENSION__()
 )
